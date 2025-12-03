@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Kategori extends Model
 {
-    protected $table = "kategori";
-    protected $primaryKey = 'idkategori';
-    public $timestamps = false;
-    protected $fillable = ['idkategori', 'nama_kategori']; //yang mau ditampilin or di apdet
+    use HasFactory;
 
-    public function kodeTindakan(){
-        return $this->hasMany(kodeTindakanTerapi::class, 'idkategori', 'idkategori');
-    }
+    protected $table = 'kategori';
+    protected $primaryKey = 'idkategori';
+    public $incrementing = true;
+    protected $keyType = 'int';
+    public $timestamps = false;
+
+    protected $fillable = ['nama_kategori'];
 }

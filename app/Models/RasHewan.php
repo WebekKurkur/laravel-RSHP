@@ -2,20 +2,31 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class RasHewan extends Model
 {
-    protected $table = "ras_hewan";
-    protected $primaryKey = 'idras_hewan';
-    public $timestamps = false;
-    protected $fillable = ['idras_hewan', 'nama_ras_hewan', 'idjenis_hewan']; //yang mau ditampilin or di apdet
+    use HasFactory;
 
-    public function jenisHewan(){
+    protected $table = 'ras_hewan';
+    protected $primaryKey = 'idras_hewan';
+    public $incrementing = true;
+    protected $keyType = 'int';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'nama_ras',
+        'idjenis_hewan',
+    ];
+
+    public function jenis()
+    {
         return $this->belongsTo(JenisHewan::class, 'idjenis_hewan', 'idjenis_hewan');
     }
-
-    public function pets() {
-        return $this->hasMany(pet::class, 'idras_hewan', 'idras_hewan');
+    
+    public function pets()
+    {
+        return $this->hasMany(Pet::class, 'idras_hewan', 'idras_hewan');
     }
 }

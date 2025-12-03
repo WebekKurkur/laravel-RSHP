@@ -4,13 +4,16 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\pemilik;
+use App\Models\Pemilik;
 
 class PemilikController extends Controller
 {
-    public function index() {
-        $pemilik = Pemilik::all();
-        return view('admin.pemilik.index', compact('pemilik'));
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $items = Pemilik::with('user')->get();
+        return view('admin.pemilik.index', compact('items'));
     }
 }
-// view belom ada

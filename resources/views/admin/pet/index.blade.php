@@ -1,39 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Daftar Pet</title>
-</head>
-<body>
-    <h1>Daftar Pet</h1>
+@extends('layouts.app')
 
-    <table border="1" cellpadding="8">
+@section('content')
+ 
+  <div class="container">
+    <h1>Daftar Pet</h1>
+    <p><a href="{{ route('admin.dashboard-admin') }}" class="btn" style="display:inline-block;margin-bottom:10px;">Kembali ke Dashboard</a></p>
+    @if(isset($items) && count($items))
+      <table style="width:100%; border-collapse: collapse;">
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nama</th>
-                <th>Tanggal Lahir</th>
-                <th>Warna / Tanda</th>
-                <th>Jenis Kelamin</th>
-                <th>Nama Pemilik</th>
-                <th>Ras Hewan</th>
-            </tr>
+          <tr style="background:#eee">
+            <th style="padding:8px">ID</th>
+            <th style="padding:8px">Nama</th>
+            <th style="padding:8px">Tanggal Lahir</th>
+            <th style="padding:8px">Pemilik</th>
+            <th style="padding:8px">Ras</th>
+          </tr>
         </thead>
         <tbody>
-            @forelse ($pet as $item)
-                <tr>
-                    <td>{{ $item->idpet }}</td>
-                    <td>{{ $item->nama }}</td>
-                    <td>{{ $item->tanggal_lahir }}</td>
-                    <td>{{ $item->warna_tanda }}</td>
-                    <td>{{ $item->jenis_kelamin }}</td>
-                    <td>{{ $item->pemilik->user->nama}}</td>
-                    <td>{{ $item->rasHewan->nama_ras}}</td>
-                </tr>
-            @empty
-                <tr><td colspan="7">Tidak ada data</td></tr>
-            @endforelse
+          @foreach($items as $item)
+            <tr>
+              <td style="padding:8px">{{ $item->idpet ?? $item->id }}</td>
+              <td style="padding:8px">{{ $item->nama ?? '-' }}</td>
+              <td style="padding:8px">{{ $item->tanggal_lahir ?? '-' }}</td>
+              <td style="padding:8px">{{ $item->pemilik->idpemilik ?? '-' }}</td>
+              <td style="padding:8px">{{ $item->ras->nama_ras ?? '-' }}</td>
+            </tr>
+          @endforeach
         </tbody>
-    </table>
-</body>
-</html>
+      </table>
+    @else
+      <p>Tidak ada data untuk ditampilkan.</p>
+    @endif
+  </div>
+@endsection

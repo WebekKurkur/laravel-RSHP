@@ -2,19 +2,32 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class RoleUser extends Model
 {
-    protected $table = "role_user";
-    protected $primaryKey = 'idrole_user';
-    public $timestamps = false;
-    protected $fillable = ['idrole_user', 'idrole', 'iduser', 'status']; //yang mau ditampilin or di apdet
+    use HasFactory;
 
-    public function user() {
-        return $this->belongsTo(User::class, 'iduser', 'iduser');
-    }
-    public function role() {
+    protected $table = 'role_user';
+    protected $primaryKey = 'idrole_user';
+    public $incrementing = true;
+    protected $keyType = 'int';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'idrole',
+        'iduser',
+        'status',
+    ];
+
+    public function role()
+    {
         return $this->belongsTo(Role::class, 'idrole', 'idrole');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'iduser', 'iduser');
     }
 }

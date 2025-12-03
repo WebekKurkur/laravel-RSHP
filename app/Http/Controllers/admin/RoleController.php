@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\role;
+use App\Models\Role;
+
 class RoleController extends Controller
 {
-    public function index() {
-        $role = Role::all();
-        return view('admin.role.index', compact('role'));
+    public function index()
+    {
+        $items = Role::all();
+        return view('admin.role.index', compact('items'));
     }
 }

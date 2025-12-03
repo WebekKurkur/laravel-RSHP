@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Kategori;
 
 class KategoriController extends Controller
 {
-    public function index() {
-        $kategori = Kategori::all();
-        return view('admin.kategori.index', compact('kategori'));
+    public function index()
+    {
+        $items = Kategori::all();
+        return view('admin.kategori.index', compact('items'));
     }
 }

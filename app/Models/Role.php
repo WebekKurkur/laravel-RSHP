@@ -2,20 +2,28 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class role extends Model
+class Role extends Model
 {
-    protected $table = "Role";
-    protected $primaryKey = 'idrole';
-    public $timestamps = false;
-    protected $fillable = ['idrole', 'nama_role']; //yang mau ditampilin or di apdet
+    use HasFactory;
 
-    public function roleUser() {
+    protected $table = 'role';
+    protected $primaryKey = 'idrole';
+    public $incrementing = true;
+    protected $keyType = 'int';
+    public $timestamps = false;
+
+    protected $fillable = ['nama_role'];
+
+    public function roleUser()
+    {
         return $this->hasMany(RoleUser::class, 'idrole', 'idrole');
     }
-    public function user() {
-        return $this->belongsToMany(User::class, 'role_user','idrole', 'iduser')
-        ->withPivot('status', 'idrole_user');
+    
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'role_user', 'idrole', 'iduser')->withPivot('status','idrole_user');
     }
 }

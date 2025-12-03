@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Praktikum 1</title>
-  <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,14 +13,14 @@
   <body>
     <!--navbar-->
     <nav class="navbar">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/struktur">Struktur Organisasi</a></li>
-            <li><a href="/layanan">Layanan Umum</a></li>
-            <li><a href="/visimisi">Visi-Misi dan Tujuan</a></li>
-            <li><a href="../loginPage.php">login</a></li>
-        </ul>
-    </nav>
+  <ul>
+   <li><a href="{{ route('site.home') }}">Home</a></li>
+   <li><a href="{{ route('site.struktur') }}">Struktur Organisasi</a></li>
+   <li><a href="{{ route('site.layanan') }}">Layanan Umum</a></li>
+   <li><a href="{{ route('site.visi') }}">Visi-Misi dan Tujuan</a></li>
+   <li><a href="#">login</a></li>
+  </ul>
+ </nav>
 
     <!--main-->
     <div class="container">

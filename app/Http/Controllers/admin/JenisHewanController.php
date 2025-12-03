@@ -8,8 +8,12 @@ use App\Models\JenisHewan;
 
 class JenisHewanController extends Controller
 {
-    public function index() {
-        $jenisHewan = JenisHewan::all();
-        return view('admin.jenisHewan.index', compact('jenisHewan'));
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $items = JenisHewan::all();
+        return view('admin.jenis-hewan.index', compact('items'));
     }
-};
+}

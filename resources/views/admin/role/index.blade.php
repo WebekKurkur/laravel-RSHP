@@ -1,31 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Daftar Role</title>
-</head>
-<body>
-    <h1>Daftar Role</h1>
+@extends('layouts.app')
 
-    <table border="1" cellpadding="8">
+@section('content')
+  <div class="container">
+    <h1>Daftar Role</h1>
+    <p><a href="{{ route('admin.dashboard-admin') }}" class="btn" style="display:inline-block;margin-bottom:10px;">Kembali ke Dashboard</a></p>
+    @if(isset($items) && count($items))
+      <table style="width:100%; border-collapse: collapse;">
         <thead>
-            <tr>
-                <th>ID Ras</th>
-                <th>Nama Ras</th>
-            </tr>
+          <tr style="background:#eee">
+            <th style="padding:8px">ID</th>
+            <th style="padding:8px">Nama Role</th>
+            <th style="padding:8px">Users Count</th>
+          </tr>
         </thead>
         <tbody>
-            @forelse ($role as $data)
-                <tr>
-                    <td>{{ $data->idrole }}</td>
-                    <td>{{ $data->nama_role }}</td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="3">Tidak ada data</td>
-                </tr>
-            @endforelse
+          @foreach($items as $item)
+            <tr>
+              <td style="padding:8px">{{ $item->idrole ?? $item->id }}</td>
+              <td style="padding:8px">{{ $item->nama_role ?? '-' }}</td>
+              <td style="padding:8px">{{ isset($item->users) ? count($item->users) : '-' }}</td>
+            </tr>
+          @endforeach
         </tbody>
-    </table>
-</body>
-</html>
+      </table>
+    @else
+      <p>Tidak ada data untuk ditampilkan.</p>
+    @endif
+  </div>
+@endsection
