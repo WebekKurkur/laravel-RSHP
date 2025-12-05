@@ -15,6 +15,13 @@
                     @endif
 
                     {{ __('You are logged in!') }} {{ session('user_role_name') }}
+                    <hr>
+                    <div class="mb-2">
+                        <a href="{{ route('resepsionis.pemilik.register') }}" class="btn btn-primary">Form Registrasi Pemilik</a>
+                        <a href="{{ route('resepsionis.pet.register') }}" class="btn btn-primary">Form Registrasi Pet</a>
+                        <a href="{{ route('resepsionis.temu.create') }}" class="btn btn-primary">Form Registrasi Temu Dokter</a>
+                        <a href="{{ route('resepsionis.temu.index') }}" class="btn btn-outline-primary">Daftar Pasien</a>
+                    </div>
                 </div>
             </div>
         </div>

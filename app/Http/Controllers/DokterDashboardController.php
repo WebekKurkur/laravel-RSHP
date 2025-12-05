@@ -1,12 +1,16 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class DokterDashboardController extends Controller
 {
     public function index()
     {
-        return view('dokter.dashboard-dokter');
+        if (view()->exists('dokter.dashboard-dokter')) {
+            return view('dokter.dashboard-dokter');
+        }
+        return response('Dokter dashboard placeholder');
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 08, 2025 at 01:54 AM
+-- Generation Time: Dec 04, 2025 at 11:41 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -67,7 +67,8 @@ INSERT INTO `jenis_hewan` (`idjenis_hewan`, `nama_jenis_hewan`) VALUES
 (3, 'Kelinci (Oryctolagus cuniculus)'),
 (4, 'Burung'),
 (5, 'Reptil'),
-(6, 'Rodent / Hewan Kecil');
+(6, 'Rodent / Hewan Kecil'),
+(7, 'Coba 1');
 
 -- --------------------------------------------------------
 
@@ -92,7 +93,9 @@ INSERT INTO `kategori` (`idkategori`, `nama_kategori`) VALUES
 (5, 'Terapi Oral'),
 (6, 'Diagnostik'),
 (7, 'Rawat Inap'),
-(8, 'Lain-lain');
+(8, 'Lain-lain'),
+(9, 'Coba Kategori 1'),
+(10, 'Coba Kategori 2');
 
 -- --------------------------------------------------------
 
@@ -274,7 +277,8 @@ INSERT INTO `ras_hewan` (`idras_hewan`, `nama_ras`, `idjenis_hewan`) VALUES
 (42, 'Guinea Pig (Abyssinian, Peruvian, American Shorthair)', 6),
 (43, 'Gerbil', 6),
 (44, 'Chinchilla', 6),
-(48, 'beagles', 1);
+(48, 'beagles', 1),
+(49, 'Si Putih Dari Gua Hantu', 7);
 
 -- --------------------------------------------------------
 
@@ -379,7 +383,8 @@ INSERT INTO `temu_dokter` (`idreservasi_dokter`, `no_urut`, `waktu_daftar`, `sta
 (3, 3, '2025-09-26 00:56:23', '1', 3, 4),
 (4, 4, '2025-09-26 02:26:27', '1', 1, 4),
 (5, 1, '2025-10-06 09:17:57', NULL, 4, 4),
-(6, 1, '2025-10-06 23:13:49', NULL, 1, 4);
+(6, 1, '2025-10-06 23:13:49', '1', 1, 4),
+(7, 1, '2025-11-16 04:41:37', NULL, 4, 4);
 
 -- --------------------------------------------------------
 
@@ -520,7 +525,7 @@ ALTER TABLE `detail_rekam_medis`
 -- AUTO_INCREMENT for table `jenis_hewan`
 --
 ALTER TABLE `jenis_hewan`
-  MODIFY `idjenis_hewan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idjenis_hewan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `kode_tindakan_terapi`
@@ -544,7 +549,7 @@ ALTER TABLE `pet`
 -- AUTO_INCREMENT for table `ras_hewan`
 --
 ALTER TABLE `ras_hewan`
-  MODIFY `idras_hewan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `idras_hewan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `rekam_medis`
@@ -568,7 +573,7 @@ ALTER TABLE `role_user`
 -- AUTO_INCREMENT for table `temu_dokter`
 --
 ALTER TABLE `temu_dokter`
-  MODIFY `idreservasi_dokter` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idreservasi_dokter` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`

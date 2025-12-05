@@ -5,7 +5,8 @@
   <div class="container">
     <main>
       <h1>Admin - Daftar Pemilik</h1>
-      <p><a href="{{ route('admin.dashboard-admin') }}" class="btn" style="display:inline-block;margin-bottom:10px;">Kembali ke Dashboard</a></p>
+      <div class="mb-3">
+        <a href="{{ route('admin.dashboard-admin') }}" class="btn btn-outline-secondary">Kembali ke Dashboard</a>
     </main>
 
     @if(isset($items) && count($items))

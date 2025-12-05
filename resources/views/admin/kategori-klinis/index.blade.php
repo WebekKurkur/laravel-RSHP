@@ -4,7 +4,10 @@
   
   <div class="container">
     <h1>Daftar Kategori Klinis</h1>
-    <p><a href="{{ route('admin.dashboard-admin') }}" class="btn" style="display:inline-block;margin-bottom:10px;">Kembali ke Dashboard</a></p>
+    <div class="mb-3">
+      <a href="{{ route('admin.dashboard-admin') }}" class="btn btn-outline-secondary">Kembali ke Dashboard</a>
+      <a href="{{ route('admin.kategori-klinis.create') }}" class="btn btn-primary">Tambah Kategori Klinis</a>
+    </div>
     @if(isset($items) && count($items))
       <table style="width:100%; border-collapse: collapse;">
         <thead>

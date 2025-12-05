@@ -18,6 +18,7 @@
 
                     <div class="mb-3">
                         <a href="{{ route('admin.user.index') }}" class="btn btn-primary mb-2">Daftar User</a>
+                        <a href="{{ route('admin.role-user.index') }}" class="btn btn-primary mb-2">Manajemen Role</a>
                         <a href="{{ route('admin.role.index') }}" class="btn btn-secondary mb-2">Daftar Role</a>
                         <a href="{{ route('admin.pemilik.index') }}" class="btn btn-success mb-2">Daftar Pemilik</a>
                         <a href="{{ route('admin.pet.index') }}" class="btn btn-info mb-2">Daftar Pet</a>
