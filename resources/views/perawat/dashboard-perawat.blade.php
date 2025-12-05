@@ -15,6 +15,11 @@
                     @endif
 
                     {{ __('You are logged in!') }} {{ session('user_role_name') }}
+
+                    <div class="mt-4">
+                        <a href="{{ route('perawat.rekam-medis.index') }}" class="btn btn-outline-primary">Lihat Rekam Medis</a>
+                    </div>
+
                 </div>
             </div>
         </div>

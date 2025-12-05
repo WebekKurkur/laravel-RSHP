@@ -13,7 +13,9 @@ use App\Http\Controllers\admin\PetController;
 use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\DashboardAdminController;
 use App\Http\Controllers\DokterDashboardController;
+use App\Http\Controllers\Dokter\RekamMedisController as DokterRekamMedisController;
 use App\Http\Controllers\PerawatDashboardController;
+use App\Http\Controllers\Perawat\RekamMedisController;
 use App\Http\Controllers\ResepsionisDashboardController;
 use App\Http\Controllers\PemilikDashboardController;
 
@@ -85,11 +87,20 @@ route::prefix('admin')->middleware('IsAdministrator')->group(function() {
 // Dokter
 route::prefix('dokter')->middleware('IsDokter')->group(function() {
     route::get('/dashboard-dokter', [DokterDashboardController::class, 'index'])->name('dokter.dashboard-dokter');
+    // Rekam medis (Dokter) - index
+    route::get('/rekam-medis', [DokterRekamMedisController::class, 'index'])->name('dokter.rekam-medis.index');
+    route::get('/rekam-medis/{id}', [DokterRekamMedisController::class, 'show'])->name('dokter.rekam-medis.show');
 });
 
 // Perawat
 route::prefix('perawat')->middleware('IsPerawat')->group(function() {
     route::get('/dashboard-perawat', [PerawatDashboardController::class, 'index'])->name('perawat.dashboard-perawat');
+    // Rekam medis (Perawat)
+    route::get('/rekam-medis', [RekamMedisController::class, 'index'])->name('perawat.rekam-medis.index');
+    route::get('/rekam-medis/create', [RekamMedisController::class, 'create'])->name('perawat.rekam-medis.create');
+    route::post('/rekam-medis', [RekamMedisController::class, 'store'])->name('perawat.rekam-medis.store');
+    route::get('/rekam-medis/{id}', [RekamMedisController::class, 'show'])->name('perawat.rekam-medis.show');
+    route::post('/rekam-medis/{id}/detail', [RekamMedisController::class, 'storeDetail'])->name('perawat.rekam-medis.detail.store');
 });
 
 // Resepsionis
