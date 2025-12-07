@@ -18,7 +18,7 @@
    <li><a href="{{ route('site.struktur') }}">Struktur Organisasi</a></li>
    <li><a href="{{ route('site.layanan') }}">Layanan Umum</a></li>
    <li><a href="{{ route('site.visi') }}">Visi-Misi dan Tujuan</a></li>
-   <li><a href="#">login</a></li>
+   <li><a href="{{ route('login') }}">login</a></li>
   </ul>
  </nav>
 

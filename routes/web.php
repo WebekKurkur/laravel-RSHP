@@ -12,12 +12,15 @@ use App\Http\Controllers\admin\KodeTindakanController;
 use App\Http\Controllers\admin\PetController;
 use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\DashboardAdminController;
-use App\Http\Controllers\DokterDashboardController;
+
+use App\Http\Controllers\dokter\DokterDashboardController;
 use App\Http\Controllers\Dokter\RekamMedisController as DokterRekamMedisController;
-use App\Http\Controllers\PerawatDashboardController;
+
+use App\Http\Controllers\perawat\PerawatDashboardController;
 use App\Http\Controllers\Perawat\RekamMedisController;
-use App\Http\Controllers\ResepsionisDashboardController;
-use App\Http\Controllers\PemilikDashboardController;
+
+use App\Http\Controllers\resepsionis\ResepsionisDashboardController;
+use App\Http\Controllers\pemilik\PemilikDashboardController;
 
 
 route::get('/koneksi', [SiteController::class, 'koneksi'])->name('site.koneksi');
@@ -124,6 +127,11 @@ route::prefix('resepsionis')->middleware('IsResepsionis')->group(function() {
 // Pemilik
 route::prefix('pemilik')->middleware('IsPemilik')->group(function() {
     route::get('/dashboard-pemilik', [PemilikDashboardController::class, 'index'])->name('pemilik.dashboard-pemilik');
+    // Pemilik-specific indexes
+    route::get('/pets', [App\Http\Controllers\Pemilik\PemilikController::class, 'pets'])->name('pemilik.pets.index');
+    route::get('/rekam-medis', [App\Http\Controllers\Pemilik\PemilikController::class, 'rekamMedis'])->name('pemilik.rekam-medis.index');
+    route::get('/rekam-medis/{id}', [App\Http\Controllers\Pemilik\PemilikController::class, 'show'])->name('pemilik.rekam-medis.show');
+    route::get('/reservations', [App\Http\Controllers\Pemilik\PemilikController::class, 'reservations'])->name('pemilik.reservations.index');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
