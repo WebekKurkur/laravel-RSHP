@@ -33,13 +33,11 @@ class TemuDokter extends Model
         return $this->belongsTo(RoleUser::class, 'idrole_user', 'idrole_user');
     }
 
-    // convenience accessor to get the linked User (dokter) via roleUser
     public function getDokterAttribute()
     {
         return $this->roleUser ? $this->roleUser->user : null;
     }
 
-    // compatibility accessors so views that use old attribute names still work
     public function getNomorUrutAttribute()
     {
         return $this->no_urut;

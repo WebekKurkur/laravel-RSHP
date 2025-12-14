@@ -22,6 +22,8 @@ use App\Http\Controllers\Perawat\RekamMedisController;
 use App\Http\Controllers\resepsionis\ResepsionisDashboardController;
 use App\Http\Controllers\pemilik\PemilikDashboardController;
 
+use App\Http\Controllers\admin\RoleUserController;
+use App\Http\Controllers\admin\StaffController;
 
 route::get('/koneksi', [SiteController::class, 'koneksi'])->name('site.koneksi');
 
@@ -86,15 +88,15 @@ route::prefix('admin')->middleware('IsAdministrator')->group(function() {
     route::get('/role/create', [RoleController::class, 'create'])->name('admin.role.create');
     route::post('/role', [RoleController::class, 'store'])->name('admin.role.store');
   
-    route::get('/role-user', [App\Http\Controllers\admin\RoleUserController::class, 'index'])->name('admin.role-user.index');
-    route::post('/role-user', [App\Http\Controllers\admin\RoleUserController::class, 'store'])->name('admin.role-user.store');
-    route::delete('/role-user/{id}', [App\Http\Controllers\admin\RoleUserController::class, 'destroy'])->name('admin.role-user.destroy');
+    route::get('/role-user', [RoleUserController::class, 'index'])->name('admin.role-user.index');
+    route::post('/role-user', [RoleUserController::class, 'store'])->name('admin.role-user.store');
+    route::delete('/role-user/{id}', [RoleUserController::class, 'destroy'])->name('admin.role-user.destroy');
     // Create dokter / perawat pages (admin)
-    route::get('/dokter/create', [App\Http\Controllers\admin\StaffController::class, 'createDokter'])->name('admin.dokter.create');
-    route::post('/dokter', [App\Http\Controllers\admin\StaffController::class, 'storeDokter'])->name('admin.dokter.store');
+    route::get('/dokter/create', [StaffController::class, 'createDokter'])->name('admin.dokter.create');
+    route::post('/dokter', [StaffController::class, 'storeDokter'])->name('admin.dokter.store');
 
-    route::get('/perawat/create', [App\Http\Controllers\admin\StaffController::class, 'createPerawat'])->name('admin.perawat.create');
-    route::post('/perawat', [App\Http\Controllers\admin\StaffController::class, 'storePerawat'])->name('admin.perawat.store');
+    route::get('/perawat/create', [StaffController::class, 'createPerawat'])->name('admin.perawat.create');
+    route::post('/perawat', [StaffController::class, 'storePerawat'])->name('admin.perawat.store');
 });
 
 // Dokter
@@ -139,7 +141,6 @@ route::prefix('resepsionis')->middleware('IsResepsionis')->group(function() {
 // Pemilik
 route::prefix('pemilik')->middleware('IsPemilik')->group(function() {
     route::get('/dashboard-pemilik', [PemilikDashboardController::class, 'index'])->name('pemilik.dashboard-pemilik');
-    // Pemilik-specific indexes
     route::get('/pets', [App\Http\Controllers\Pemilik\PemilikController::class, 'pets'])->name('pemilik.pets.index');
     route::get('/rekam-medis', [App\Http\Controllers\Pemilik\PemilikController::class, 'rekamMedis'])->name('pemilik.rekam-medis.index');
     route::get('/rekam-medis/{id}', [App\Http\Controllers\Pemilik\PemilikController::class, 'show'])->name('pemilik.rekam-medis.show');

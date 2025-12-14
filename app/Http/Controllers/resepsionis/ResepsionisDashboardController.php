@@ -15,7 +15,7 @@ class ResepsionisDashboardController extends Controller
         $showAll = $request->query('all') == '1';
         $order = $request->query('order', 'desc') === 'asc' ? 'asc' : 'desc';
 
-        $qb = DB::table('temu_dokter')->select('temu_dokter.idtemu_dokter');
+        $qb = DB::table('temu_dokter')->select('temu_dokter.idreservasi_dokter');
 
         if (!$showAll) {
             if ($tanggal) {
@@ -35,8 +35,8 @@ class ResepsionisDashboardController extends Controller
             $qb->limit(10);
         }
 
-        $ids = $qb->pluck('idtemu_dokter')->toArray();
-        $items = $ids ? TemuDokter::with(['pet', 'roleUser.user'])->whereIn('idtemu_dokter', $ids)->get() : collect();
+        $ids = $qb->pluck('idreservasi_dokter')->toArray();
+        $items = $ids ? TemuDokter::with(['pet', 'roleUser.user'])->whereIn('idreservasi_dokter', $ids)->get() : collect();
 
         return view('resepsionis.dashboard-resepsionis', compact('items', 'tanggal', 'showAll', 'order'));
     }
