@@ -41,6 +41,8 @@ route::prefix('admin')->middleware('IsAdministrator')->group(function() {
     route::get('/jenis-hewan/{id}/edit', [JenisHewanController::class, 'edit'])->name('admin.jenis-hewan.edit');
     route::put('/jenis-hewan/{id}', [JenisHewanController::class, 'update'])->name('admin.jenis-hewan.update');
     route::delete('/jenis-hewan/{id}', [JenisHewanController::class, 'destroy'])->name('admin.jenis-hewan.destroy');
+    route::post('/jenis-hewan/{id}/restore', [JenisHewanController::class, 'restore'])->name('admin.jenis-hewan.restore');
+    route::delete('/jenis-hewan/{id}/force-delete', [JenisHewanController::class, 'forceDelete'])->name('admin.jenis-hewan.forceDelete');
 
     route::get('/pemilik', [PemilikController::class, 'index'])->name('admin.pemilik.index');
     // route::get('/pemilik/create', [PemilikController::class, 'create'])->name('admin.pemilik.create');
@@ -59,6 +61,8 @@ route::prefix('admin')->middleware('IsAdministrator')->group(function() {
     route::get('/ras-hewan/{id}/edit', [RasHewanController::class, 'edit'])->name('admin.ras-hewan.edit');
     route::put('/ras-hewan/{id}', [RasHewanController::class, 'update'])->name('admin.ras-hewan.update');
     route::delete('/ras-hewan/{id}', [RasHewanController::class, 'destroy'])->name('admin.ras-hewan.destroy');
+    route::post('/ras-hewan/{id}/restore', [RasHewanController::class, 'restore'])->name('admin.ras-hewan.restore');
+    route::delete('/ras-hewan/{id}/force-delete', [RasHewanController::class, 'forceDelete'])->name('admin.ras-hewan.forceDelete');
 
     route::get('/kategori', [KategoriController::class, 'index'])->name('admin.kategori.index');
     route::get('/kategori/create', [KategoriController::class, 'create'])->name('admin.kategori.create');
@@ -85,6 +89,12 @@ route::prefix('admin')->middleware('IsAdministrator')->group(function() {
     route::get('/role-user', [App\Http\Controllers\admin\RoleUserController::class, 'index'])->name('admin.role-user.index');
     route::post('/role-user', [App\Http\Controllers\admin\RoleUserController::class, 'store'])->name('admin.role-user.store');
     route::delete('/role-user/{id}', [App\Http\Controllers\admin\RoleUserController::class, 'destroy'])->name('admin.role-user.destroy');
+    // Create dokter / perawat pages (admin)
+    route::get('/dokter/create', [App\Http\Controllers\admin\StaffController::class, 'createDokter'])->name('admin.dokter.create');
+    route::post('/dokter', [App\Http\Controllers\admin\StaffController::class, 'storeDokter'])->name('admin.dokter.store');
+
+    route::get('/perawat/create', [App\Http\Controllers\admin\StaffController::class, 'createPerawat'])->name('admin.perawat.create');
+    route::post('/perawat', [App\Http\Controllers\admin\StaffController::class, 'storePerawat'])->name('admin.perawat.store');
 });
 
 // Dokter
@@ -93,6 +103,8 @@ route::prefix('dokter')->middleware('IsDokter')->group(function() {
     // Rekam medis (Dokter) - index
     route::get('/rekam-medis', [DokterRekamMedisController::class, 'index'])->name('dokter.rekam-medis.index');
     route::get('/rekam-medis/{id}', [DokterRekamMedisController::class, 'show'])->name('dokter.rekam-medis.show');
+    // allow dokter to add detail lines when viewing a rekam medis
+    route::post('/rekam-medis/{id}/detail', [DokterRekamMedisController::class, 'storeDetail'])->name('dokter.rekam-medis.detail.store');
 });
 
 // Perawat

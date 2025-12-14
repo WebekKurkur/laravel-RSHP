@@ -1,29 +1,57 @@
-@extends('layouts.app')
+@extends('layouts.lte.main')
 
 @section('content')
-  <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }} - {{ session('user_name') }}</div>
+<br>
+<div class="container">
+        <main>
+                <h1>Dashboard Pemilik</h1>
+        </main>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+        @if(session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
-                    {{ __('You are logged in!') }} {{ session('user_role_name') }}
-
-                    <div class="mt-3">
-                        <a href="{{ route('pemilik.pets.index') }}" class="btn btn-primary">Hewan Peliharaan Saya</a>
-                        <a href="{{ route('pemilik.rekam-medis.index') }}" class="btn btn-secondary ms-2">Rekam Medis Saya</a>
-                        <a href="{{ route('pemilik.reservations.index') }}" class="btn btn-info ms-2">Reservasi Saya</a>
+        <div class="card mb-4">
+            <div class="card-header">Daftar Reservasi Saya</div>
+            <div class="card-body p-0">
+                @if(isset($reservations) && count($reservations))
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width:10px">ID</th>
+                                    <th>Pet</th>
+                                    <th>Waktu Daftar</th>
+                                    <th>Status</th>
+                                    <th>Dokter</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($reservations as $r)
+                                    <tr class="align-middle">
+                                        <td>{{ $r->idreservasi_dokter }}</td>
+                                        <td>{{ $r->pet ? $r->pet->nama : '-' }}</td>
+                                        <td>{{ $r->waktu_daftar }}</td>
+                                        <td>{{ $r->status }}</td>
+                                        <td>{{ $r->roleUser && $r->roleUser->user ? $r->roleUser->user->nama : '-' }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                </div>
+                @else
+                    <div class="p-3">Tidak ada reservasi untuk hewan Anda.</div>
+                @endif
             </div>
         </div>
-    </div>
+
+        <div class="mt-3">
+            <a href="{{ route('pemilik.pets.index') }}" class="btn btn-secondary">Daftar Hewan</a>
+            <a href="{{ route('pemilik.rekam-medis.index') }}" class="btn btn-secondary ms-2">Daftar Rekam Medis</a>
+        </div>
+
 </div>
 @endsection

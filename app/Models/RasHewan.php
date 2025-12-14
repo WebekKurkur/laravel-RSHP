@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\SoftDeletesByUser;
 
 class RasHewan extends Model
 {
     use HasFactory;
+    use SoftDeletesByUser;
 
     protected $table = 'ras_hewan';
     protected $primaryKey = 'idras_hewan';

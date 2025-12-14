@@ -13,7 +13,7 @@ class JenisHewanController extends Controller
      */
     public function index()
     {
-        $items = JenisHewan::all();
+        $items = JenisHewan::withTrashed()->get();
         return view('admin.jenis-hewan.index', compact('items'));
     }
 
@@ -102,6 +102,42 @@ class JenisHewanController extends Controller
         }
         $item->delete();
         return redirect()->route('admin.jenis-hewan.index')->with('success', 'Jenis hewan dihapus.');
+    }
+
+    public function restore($id)
+    {
+        $item = JenisHewan::withTrashed()->find($id);
+        if (! $item) {
+            return redirect()->back()->with('error', 'Jenis hewan tidak ditemukan.');
+        }
+
+        try {
+            $item->restore();
+            if (isset($item->deleted_by)) {
+                $item->deleted_by = null;
+                $item->save();
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal merestore: ' . $e->getMessage());
+        }
+
+        return redirect()->route('admin.jenis-hewan.index')->with('success', 'Jenis hewan berhasil direstore.');
+    }
+
+    public function forceDelete($id)
+    {
+        $item = JenisHewan::withTrashed()->find($id);
+        if (! $item) {
+            return redirect()->back()->with('error', 'Jenis hewan tidak ditemukan.');
+        }
+
+        try {
+            $item->forceDelete();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menghapus permanen: ' . $e->getMessage());
+        }
+
+        return redirect()->route('admin.jenis-hewan.index')->with('success', 'Jenis hewan dihapus permanen.');
     }
 }
 

@@ -1,51 +1,82 @@
-@extends('layouts.app')
+@extends('layouts.lte.main')
 
 @section('content')
+<br>
 <div class="container">
-    <div class="row">
-        <div class="col-md-8">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Detail Rekam Medis #{{ $item->idrekam_medis }}</div>
 
                 <div class="card-body">
-                    @if(session('error'))
-                        <div class="alert alert-danger">{{ session('error') }}</div>
-                    @endif
-                    @if(session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
+                    <div class="table-responsive mb-3">
+                        <table class="table table-bordered table-hover mb-0">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 200px">Temu Dokter</th>
+                                    <td>#{{ $item->idreservasi_dokter }} @if($item->temuDokter && $item->temuDokter->pet) - {{ $item->temuDokter->pet->nama }} @endif</td>
+                                </tr>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <td>{{ $item->created_at ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Anamnesa</th>
+                                    <td>{{ $item->anamnesa ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Temuan Klinis</th>
+                                    <td>{{ $item->temuan_klinis ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Diagnosa</th>
+                                    <td>{{ $item->diagnosa ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Dokter Pemeriksa</th>
+                                    <td>@if($item->temuDokter && $item->temuDokter->roleUser && $item->temuDokter->roleUser->user){{ $item->temuDokter->roleUser->user->nama }}@else - @endif</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                    <p><strong>Temu Dokter:</strong> #{{ $item->idreservasi_dokter }} @if($item->temuDokter && $item->temuDokter->pet) - {{ $item->temuDokter->pet->nama }} @endif</p>
-                    <p><strong>Tanggal:</strong> {{ $item->created_at }}</p>
-                    <p><strong>Anamnesa:</strong><br>{{ $item->anamnesa }}</p>
-                    <p><strong>Temuan Klinis:</strong><br>{{ $item->temuan_klinis }}</p>
-                    <p><strong>Diagnosa:</strong><br>{{ $item->diagnosa }}</p>
-                    <p><strong>Dokter Pemeriksa:</strong>
-                        @if($item->temuDokter && $item->temuDokter->roleUser && $item->temuDokter->roleUser->user)
-                            {{ $item->temuDokter->roleUser->user->nama }}
-                        @else
-                            -
-                        @endif
-                    </p>
+                    <div class="card mb-3">
+                        <div class="card-header">Detail Tindakan</div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th style="width:60px">ID</th>
+                                            <th>Kode</th>
+                                            <th>Deskripsi</th>
+                                            <th>Catatan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if($item->detail && $item->detail->count())
+                                            @foreach($item->detail as $d)
+                                                <tr class="align-middle">
+                                                    <td>{{ $d->iddetail_rekam_medis ?? '-' }}</td>
+                                                    <td>{{ $d->kode ? $d->kode->kode : $d->idkode_tindakan_terapi }}</td>
+                                                    <td>{{ $d->kode ? $d->kode->deskripsi_tindakan_terapi : '-' }}</td>
+                                                    <td>{{ $d->detail ?? '-' }}</td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="4">Tidak ada detail tindakan.</td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 
-                    <hr>
-                    <h5>Detail Tindakan</h5>
-                    @if($item->detail && $item->detail->count())
-                        <ul>
-                            @foreach($item->detail as $d)
-                                <li>
-                                    {{ $d->kode ? ($d->kode->kode . ' - ' . $d->kode->deskripsi_tindakan_terapi) : ('Kode: ' . $d->idkode_tindakan_terapi) }}
-                                    @if($d->detail) - {{ $d->detail }} @endif
-                                </li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <p>Tidak ada detail tindakan.</p>
-                    @endif
-
-                    <div class="mt-3">
+                    <div class="mb-3">
                         <a href="{{ route('pemilik.rekam-medis.index') }}" class="btn btn-secondary">Kembali ke Rekam Medis</a>
-                        <a href="{{ route('pemilik.dashboard-pemilik') }}" class="btn btn-link ms-2">Kembali ke Dashboard</a>
+                        <a href="{{ route('pemilik.dashboard-pemilik') }}" class="btn btn-secondary ms-2">Kembali ke Dashboard</a>
                     </div>
                 </div>
             </div>

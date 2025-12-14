@@ -1,28 +1,29 @@
-@extends('layouts.app')
+@extends('layouts.lte.main')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-10">
-            <div class="card">
-                <div class="card-header">Reservasi (Temu Dokter) untuk Hewan Saya</div>
+<br>
+    <div class="container">
+        <main>
+            <h1>Reservasi Saya</h1>
+        </main>
 
-                <div class="card-body">
-                    @if(session('error'))
-                        <div class="alert alert-danger">{{ session('error') }}</div>
-                    @endif
-                    @if(session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
+        @if(session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
-                    @if($reservations->isEmpty())
-                        <p class="mb-0">Tidak ada reservasi untuk hewan Anda.</p>
-                    @else
-                        <div class="table-responsive">
-                        <table class="table table-striped table-hover">
-                            <thead>
+        @if($reservations->isEmpty())
+            <p class="mb-0">Tidak ada reservasi untuk hewan Anda.</p>
+        @else
+            <div class="card mb-4">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-0">
+                            <thead class="table-light">
                                 <tr>
-                                    <th>#</th>
+                                    <th style="width: 10px">ID</th>
                                     <th>Pet</th>
                                     <th>Waktu Daftar</th>
                                     <th>Status</th>
@@ -31,7 +32,7 @@
                             </thead>
                             <tbody>
                                 @foreach($reservations as $r)
-                                    <tr>
+                                    <tr class="align-middle">
                                         <td>{{ $r->idreservasi_dokter }}</td>
                                         <td>{{ $r->pet ? $r->pet->nama : '-' }}</td>
                                         <td>{{ $r->waktu_daftar }}</td>
@@ -41,15 +42,11 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        </div>
-                    @endif
-
-                    <div class="mt-3">
-                        <a href="{{ route('pemilik.dashboard-pemilik') }}" class="btn btn-secondary">Kembali ke Dashboard</a>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
+
+        
     </div>
-</div>
 @endsection

@@ -1,18 +1,48 @@
 <!--begin::Sidebar-->
       <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+        @php
+          // resolve current role early so brand and menu can use it safely
+          $role = session('user_role') ?? (Auth::check() ? (optional(Auth::user()->roleUser[0])->idrole ?? null) : null);
+        @endphp
         <!--begin::Sidebar Brand-->
         <div class="sidebar-brand">
+          @php
+            // determine brand route and text based on current role
+            $brandRoute = route('home');
+            $brandText = 'RSHP';
+            switch($role) {
+                case 1:
+                    if(Route::has('admin.dashboard-admin')) { $brandRoute = route('admin.dashboard-admin'); }
+                    $brandText = 'Dashboard Admin';
+                    break;
+                case 2:
+                    if(Route::has('dokter.dashboard-dokter')) { $brandRoute = route('dokter.dashboard-dokter'); }
+                    $brandText = 'Dashboard Dokter';
+                    break;
+                case 3:
+                    if(Route::has('perawat.dashboard-perawat')) { $brandRoute = route('perawat.dashboard-perawat'); }
+                    $brandText = 'Dashboard Perawat';
+                    break;
+                case 4:
+                    if(Route::has('resepsionis.dashboard-resepsionis')) { $brandRoute = route('resepsionis.dashboard-resepsionis'); }
+                    $brandText = 'Dashboard Resepsionis';
+                    break;
+                default:
+                    if(Route::has('pemilik.dashboard-pemilik')) { $brandRoute = route('pemilik.dashboard-pemilik'); }
+                    $brandText = 'Dashboard Pemilik';
+            }
+          @endphp
           <!--begin::Brand Link-->
-          <a href="{{ route('home') }}" class="brand-link">
+          <a href="{{ $brandRoute }}" class="brand-link">
             <!--begin::Brand Image-->
             <img
               src="{{ asset('assets/img/AdminLTELogo.png') }}"
-              alt="AdminLTE Logo"
+              alt="Logo"
               class="brand-image opacity-75 shadow"
             />
             <!--end::Brand Image-->
             <!--begin::Brand Text-->
-            <span class="brand-text fw-light">Admin RSHP</span>
+            <span class="brand-text fw-light">{{ $brandText }}</span>
             <!--end::Brand Text-->
           </a>
           <!--end::Brand Link-->
@@ -30,10 +60,6 @@
               data-accordion="false"
               id="navigation"
             >
-              @php
-                $role = session('user_role') ?? (Auth::check() ? (Auth::user()->roleUser[0]->idrole ?? null) : null);
-              @endphp
-
               @switch($role)
                 @case(1)
                   <li class="nav-item">
@@ -97,14 +123,14 @@
 
                 @default
                   <li class="nav-item">
-                    <a href="{{ route('pemilik.dashboard-pemilik') }}" class="nav-link">
+                    <a href="{{ Route::has('pemilik.dashboard-pemilik') ? route('pemilik.dashboard-pemilik') : route('home') }}" class="nav-link">
                       <i class="nav-icon bi bi-speedometer"></i>
                       <p>Dashboard</p>
                     </a>
                   </li>
-                  <li class="nav-item"><a href="{{ Route::has('pemilik.pets') ? route('pemilik.pets') : 'javascript:void(0);' }}" class="nav-link"><i class="nav-icon bi bi-paw"></i><p>Daftar Hewan</p></a></li>
-                  <li class="nav-item"><a href="{{ Route::has('pemilik.rekam-medis') ? route('pemilik.rekam-medis') : 'javascript:void(0);' }}" class="nav-link"><i class="nav-icon bi bi-journal-medical"></i><p>Daftar Rekam Medis</p></a></li>
-                  <li class="nav-item"><a href="{{ Route::has('pemilik.reservations') ? route('pemilik.reservations') : 'javascript:void(0);' }}" class="nav-link"><i class="nav-icon bi bi-calendar-heart"></i><p>Daftar Reservasi</p></a></li>
+                  <li class="nav-item"><a href="{{ Route::has('pemilik.pets.index') ? route('pemilik.pets.index') : (Route::has('pemilik.pets') ? route('pemilik.pets') : 'javascript:void(0);') }}" class="nav-link"><i class="nav-icon bi bi-paw"></i><p>Daftar Hewan</p></a></li>
+                  <li class="nav-item"><a href="{{ Route::has('pemilik.rekam-medis.index') ? route('pemilik.rekam-medis.index') : (Route::has('pemilik.rekam-medis') ? route('pemilik.rekam-medis') : 'javascript:void(0);') }}" class="nav-link"><i class="nav-icon bi bi-journal-medical"></i><p>Daftar Rekam Medis</p></a></li>
+                  <li class="nav-item"><a href="{{ Route::has('pemilik.reservations.index') ? route('pemilik.reservations.index') : (Route::has('pemilik.reservations') ? route('pemilik.reservations') : 'javascript:void(0);') }}" class="nav-link"><i class="nav-icon bi bi-calendar-heart"></i><p>Daftar Reservasi</p></a></li>
               @endswitch
             </ul>
             <!--end::Sidebar Menu-->

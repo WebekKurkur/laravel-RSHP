@@ -5,8 +5,10 @@
   <div class="container">
     <main>
       <h1>Admin - Daftar Users</h1>
-      <div class="mb-3">
+      <div class="mb-3 d-flex gap-2">
         <a href="{{ route('admin.user.create') }}" class="btn btn-primary">Tambah User</a>
+        <a href="{{ route('admin.dokter.create') }}" class="btn btn-success">Tambah Dokter</a>
+        <a href="{{ route('admin.perawat.create') }}" class="btn btn-info text-white">Tambah Perawat</a>
       </div>
     </main>
 

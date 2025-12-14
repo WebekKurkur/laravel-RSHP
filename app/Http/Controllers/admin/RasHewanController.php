@@ -11,7 +11,8 @@ class RasHewanController extends Controller
 {
     public function index()
     {
-        $items = RasHewan::with('jenis')->get();
+        
+        $items = RasHewan::withTrashed()->with('jenis')->get();
         return view('admin.ras-hewan.index', compact('items'));
     }
 
@@ -95,5 +96,42 @@ class RasHewanController extends Controller
         }
         $item->delete();
         return redirect()->route('admin.ras-hewan.index')->with('success', 'Ras hewan dihapus.');
+    }
+
+    public function restore($id)
+    {
+        $item = RasHewan::withTrashed()->find($id);
+        if (! $item) {
+            return redirect()->back()->with('error', 'Ras hewan tidak ditemukan.');
+        }
+
+        try {
+            $item->restore();
+            // optional: clear deleted_by after restore
+            if (isset($item->deleted_by)) {
+                $item->deleted_by = null;
+                $item->save();
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal merestore: ' . $e->getMessage());
+        }
+
+        return redirect()->route('admin.ras-hewan.index')->with('success', 'Ras hewan berhasil direstore.');
+    }
+
+    public function forceDelete($id)
+    {
+        $item = RasHewan::withTrashed()->find($id);
+        if (! $item) {
+            return redirect()->back()->with('error', 'Ras hewan tidak ditemukan.');
+        }
+
+        try {
+            $item->forceDelete();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menghapus permanen: ' . $e->getMessage());
+        }
+
+        return redirect()->route('admin.ras-hewan.index')->with('success', 'Ras hewan dihapus permanen.');
     }
 }

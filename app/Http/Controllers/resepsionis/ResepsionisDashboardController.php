@@ -5,6 +5,7 @@ namespace App\Http\Controllers\resepsionis;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TemuDokter;
+use Illuminate\Support\Facades\DB;
 
 class ResepsionisDashboardController extends Controller
 {
@@ -14,29 +15,28 @@ class ResepsionisDashboardController extends Controller
         $showAll = $request->query('all') == '1';
         $order = $request->query('order', 'desc') === 'asc' ? 'asc' : 'desc';
 
-        $query = TemuDokter::with(['pet', 'roleUser.user']);
+        $qb = DB::table('temu_dokter')->select('temu_dokter.idtemu_dokter');
 
-        // If user chose to show all, ignore date filtering (show from earliest record).
         if (!$showAll) {
             if ($tanggal) {
-                $query->whereDate('waktu_daftar', $tanggal);
+                $qb->whereDate('temu_dokter.waktu_daftar', $tanggal);
             } else {
-                // default to today's date so dashboard shows today's registrations
-                $query->whereDate('waktu_daftar', now()->format('Y-m-d'));
+                $qb->whereDate('temu_dokter.waktu_daftar', now()->format('Y-m-d'));
             }
         }
 
         if ($order === 'asc') {
-            $query->orderBy('waktu_daftar')->orderBy('no_urut');
+            $qb->orderBy('temu_dokter.waktu_daftar')->orderBy('temu_dokter.no_urut');
         } else {
-            $query->orderByDesc('waktu_daftar')->orderBy('no_urut');
+            $qb->orderByDesc('temu_dokter.waktu_daftar')->orderBy('temu_dokter.no_urut');
         }
 
         if (!$showAll) {
-            $query->limit(10);
+            $qb->limit(10);
         }
 
-        $items = $query->get();
+        $ids = $qb->pluck('idtemu_dokter')->toArray();
+        $items = $ids ? TemuDokter::with(['pet', 'roleUser.user'])->whereIn('idtemu_dokter', $ids)->get() : collect();
 
         return view('resepsionis.dashboard-resepsionis', compact('items', 'tanggal', 'showAll', 'order'));
     }
